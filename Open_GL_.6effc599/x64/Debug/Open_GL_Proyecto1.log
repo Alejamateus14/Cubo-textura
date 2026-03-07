@@ -1,2 +1,4 @@
 ﻿  Main.cpp
+C:\Users\Aleja\Documents\Documentos U\5 SEMESTRE\COMPUTACION GRAFICA\Open_GL_Proyecto1\Main.cpp(39,31): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
+C:\Users\Aleja\Documents\Documentos U\5 SEMESTRE\COMPUTACION GRAFICA\Open_GL_Proyecto1\Main.cpp(39,31): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
   Open_GL_Proyecto1.vcxproj -> C:\Users\Aleja\Documents\Documentos U\5 SEMESTRE\COMPUTACION GRAFICA\Open_GL_Proyecto1\x64\Debug\Open_GL_Proyecto1.exe

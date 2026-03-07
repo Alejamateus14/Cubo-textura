@@ -2,6 +2,27 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
+/*escena del sombreador, generar los vertices del sombreador, trabajaremos en 2D origen 
+en el medio de la ventana, ejex a la derecha y el ejey apunta hacia arriba 
+*/
+
+//Codigo fuente Vertex Shader
+const char* vertexShaderSource = "#version 330 core\n"
+"layout (location = 0) in vec3 aPos;\n" //lee lo que esta en la aplicacion 
+"void main ()\n"
+"{\n"
+"	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"}\0";
+//Codigo fuente Fragment Shader
+const char* fragmentShaderSource = "#version 330 core\n"
+"out vec4 FragColor;\n"
+"void main()\n"
+"{\n"
+	//Color del triangulo(rosado)
+"	FragColor = vec4(1.0f,0.4f,0.7f,1.0f);\n"
+"}\n\0";
+
+
 int main()
 {
 	//inicializar GLFW y finalizarla
@@ -13,6 +34,17 @@ int main()
 	
 	/*perfil: paquete de funciones, CORE: funciones modernas*/
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
+
+	/*Creacion de matriz GLFW que contiene las cooordenadas del triangulo,
+	estas deben estar entre -1 y 1*/
+
+	//Coordenadas de los vetices 
+	GLfloat vertices[]=
+	{
+		-0.5f, -0.5f * float(sqrt(3)) / 3,0.0f,	/*esquina inferior izquierda*/
+		0.5f, -0.5 * float(sqrt(3)) / 3, 0.0f,	/*esquina inferior derecha*/
+		0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f	/*esquina superior*/
+	};
 
 	//Creacion de la ventana
 	GLFWwindow* window = glfwCreateWindow(800, 800, "Ventana OpenGL", NULL,NULL);
@@ -26,13 +58,62 @@ int main()
 	}
 
 	glfwMakeContextCurrent(window);
-	/* hace que la ventana se un contexto, que es un objeto de Open GL, 
-	como se crea la ventana tambien hay que eliminarla se crea un ciclio While que 
+	/* hace que la ventana sea un contexto, que es un objeto de Open GL, como se crea la ventana tambien hay que eliminarla se crea un ciclio While que 
 	evita que apenas se cree se destruya automaticamente*/
-
+	
 	gladLoadGL();
 
 	glViewport(0, 0, 800, 800); //que es lo que Open Gl debe renderizar
+
+
+	/*Creacion del objeto VertexShader 	Referencia para almacenar el vertex shader*/
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER); 
+	/*Ajustar el vertex shader al código fuente poner el Vertex shader al 
+	objeto ya creado*/
+	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+	/*GPU no entiende codigo fuente, se debe complilar en código de maquina*/
+	glCompileShader(vertexShader);
+
+	//Se repiten los pasos anteriores para fragment shader
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+	glCompileShader(fragmentShader);
+
+	/*Para usar ambos shaders se agregan a un programa de shaders*/
+	GLuint shaderProgram = glCreateProgram();
+
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+	//Se borra por estetica
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	/*Creacion obejto de buffer donde se almacenaran los datos de los 	vertices. VAO antes que VBO, el orden es importante
+	CONTENEDORES DE REFERENCIA */
+	GLuint VAO, VBO;
+
+	//Generar VAO y VBO con solo 1 objeto 
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	/*Un enlace en OpenGl es qye un objeto determnado sea el objrto actual
+	el que será modificado cuando yo ponga las funciones*/
+	
+	glBindVertexArray(VAO); /*convierte el VAO en un objeto*/
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	/*Static: se usara 1 vez incluido muchas veces, Draw: para modificar y 
+	dibujar los vertices */
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); 
+	
+	/*le decimos a openGL como leer el VBO*/
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	//Para que no cambie accidentalmente
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	//Borrar color y poner otro
 	glClearColor(0.78f, 0.65f, 0.90f, 1.0f); //Color lila
@@ -42,9 +123,29 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+		glClearColor(0.78f, 0.65f, 0.90f, 1.0f); 
+		glClear(GL_COLOR_BUFFER_BIT); 
+
+		/*Decirle a OpenGl que programa usar y activarlo*/
+		glUseProgram(shaderProgram);
+
+		/*atar el VAO para que OpenGL lo sepa usar*/
+		glBindVertexArray(VAO);
+
+		/*dibujar el triangulo con las primitivas de OpenGL*/
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		
+		glfwSwapBuffers(window);
+
 		glfwPollEvents(); 
 	}
 
+	//Se eliminan todos los objetos creados 
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteProgram(shaderProgram);
+
+	//Borrar la ventana cuando acabe el programa
 	glfwDestroyWindow(window);
 
 	glfwTerminate();

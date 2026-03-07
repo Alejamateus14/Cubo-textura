@@ -1,7 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Aleja\\Documents\\Documentos U\\5 SEMESTRE\\COMPUTACION GRAFICA\\Open_GL_Proyecto1\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6EFFC599-E49F-4B8D-9A3C-617064D536F4}|Open_GL_Proyecto1.vcxproj|C:\\Users\\Aleja\\Documents\\Documentos U\\5 SEMESTRE\\COMPUTACION GRAFICA\\Open_GL_Proyecto1\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6EFFC599-E49F-4B8D-9A3C-617064D536F4}|Open_GL_Proyecto1.vcxproj|solutionrelative:Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,15 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cpp",
+              "DocumentMoniker": "C:\\Users\\Aleja\\Documents\\Documentos U\\5 SEMESTRE\\COMPUTACION GRAFICA\\Open_GL_Proyecto1\\Main.cpp",
+              "RelativeDocumentMoniker": "Main.cpp",
+              "ToolTip": "C:\\Users\\Aleja\\Documents\\Documentos U\\5 SEMESTRE\\COMPUTACION GRAFICA\\Open_GL_Proyecto1\\Main.cpp",
+              "RelativeToolTip": "Main.cpp",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-21T14:43:59.84Z",
+              "EditorCaption": ""
             }
           ]
         }
