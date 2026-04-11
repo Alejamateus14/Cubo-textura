@@ -6,8 +6,6 @@
 #include"VAO.h"
 #include"EBO.h"
 
-/*Hola mundo */
-
 /*Luego de crear las clases aparte en esta incluir los encabezados creados, reemplazando 
 las funciones predeterminadas */
 
@@ -20,13 +18,13 @@ estas deben estar entre -1 y 1*/
 
 //Coordenadas de los vetices 
 GLfloat vertices[] =
-{
-	-0.5f, -0.5f * float(sqrt(3)) / 3,0.0f,    /*esquina inferior izquierda*/
-	0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,    /*esquina inferior derecha*/
-	0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f,    /*esquina superior*/
-	-0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f,
-	0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f,
-	0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f
+{/*           COORDENADAS                /           COLORES              */
+	-0.5f, -0.5f * float(sqrt(3)) / 3,     0.0f,  1.0f,  0.75f, 0.79f,  /*esquina inferior izquierda*/
+	 0.5f, -0.5f * float(sqrt(3)) / 3,     0.0f,  1.0f,  0.75f, 0.79f,  /*esquina inferior derecha*/
+	 0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f,  1.0f,  0.07f, 0.57f,  /*esquina superior*/
+	-0.25f, 0.5f * float(sqrt(3)) / 6,     0.0f,  0.85f, 0.43f, 0.57f, /*interio izquierda*/
+	 0.25f, 0.5f * float(sqrt(3)) / 6,     0.0f,  0.85f, 0.43f, 0.57f, /*interio derecha*/
+	 0.0f, -0.5f * float(sqrt(3)) / 3,     0.0f,  1.0f,  0.75f, 0.79f	  /*interior abajo*/
 };
 
 GLuint indices[] =
@@ -81,7 +79,8 @@ int main()
 	EBO EBO1(indices, sizeof(indices));
 
 	/*vincular VBO a VAO*/
-    VAO1.LinkVBO(VBO1, 0);
+    VAO1.LinkAttrib(VBO1, 0,3,GL_FLOAT,6 * sizeof(float), (void*)0);
+    VAO1.LinkAttrib(VBO1, 1,3,GL_FLOAT,6 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	EBO1.Bind();
 	/*Desvincular para evitar modificarlo accidentalmente*/
