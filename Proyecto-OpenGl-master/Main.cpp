@@ -77,7 +77,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
 
 	//Creacion de la ventana
-	GLFWwindow* window = glfwCreateWindow(800, 800, "Ventana OpenGL", NULL,NULL);
+	GLFWwindow* window = glfwCreateWindow(1200, 1000, "Ventana OpenGL", NULL,NULL);
 
 	//verificacion de errores
 	if (window == NULL)
